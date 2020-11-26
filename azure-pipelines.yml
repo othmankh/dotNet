@@ -27,8 +27,15 @@ steps:
     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-
-- task: VSTest@2
+- task: ExtractFiles@1
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    archiveFilePatterns: '**/*.zip'
+    destinationFolder: '$(build.artifactStagingDirectory)'
+    cleanDestinationFolder: true
+    overwriteExistingFiles: true
+    
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish artifacts'
+  inputs:
+    PathtoPublish: $(build.artifactStagingDirectory)
+    ArtifactName: 'TestApp'

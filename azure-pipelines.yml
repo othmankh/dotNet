@@ -28,12 +28,12 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
     
-# - task: ExtractFiles@1
-#   inputs:
-#     archiveFilePatterns: '**/*.zip'
-#     destinationFolder: '$(build.artifactStagingDirectory)'
-#     cleanDestinationFolder: true
-#     overwriteExistingFiles: true
+- task: ExtractFiles@1
+  inputs:
+    archiveFilePatterns: '$(build.artifactStagingDirectory)/*.zip'
+    destinationFolder: '$(build.artifactStagingDirectory)/unzipped'
+    # cleanDestinationFolder: true
+    overwriteExistingFiles: true
     
 - task: PublishBuildArtifacts@1
   displayName: 'Publish artifacts'
